@@ -1,0 +1,47 @@
+{
+  "build": "default_h77d9078_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "libzlib >=1.2.11,<1.3.0a0",
+    "vc >=14.2,<15",
+    "vs2015_runtime >=14.29.30037"
+  ],
+  "extracted_package_dir": "C:\\Users\\Seth\\miniconda3\\pkgs\\libclang13-14.0.3-default_h77d9078_0",
+  "features": "",
+  "files": [
+    "Library/bin/libclang-13.dll",
+    ".nonadmin"
+  ],
+  "fn": "libclang13-14.0.3-default_h77d9078_0.tar.bz2",
+  "license": "Apache-2.0 WITH LLVM-exception",
+  "license_family": "Apache",
+  "link": {
+    "source": "C:\\Users\\Seth\\miniconda3\\pkgs\\libclang13-14.0.3-default_h77d9078_0",
+    "type": 1
+  },
+  "md5": "7e38ed4e8cde97ab81ac251c3cbe8212",
+  "name": "libclang13",
+  "package_tarball_full_path": "C:\\Users\\Seth\\miniconda3\\pkgs\\libclang13-14.0.3-default_h77d9078_0.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Library/bin/libclang-13.dll",
+        "path_type": "hardlink",
+        "sha256": "96529d3726afc132ed51364ae5e431613ae29c89913a7686084fd06b4e9a301c",
+        "sha256_in_prefix": "96529d3726afc132ed51364ae5e431613ae29c89913a7686084fd06b4e9a301c",
+        "size_in_bytes": 85299200
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "None",
+  "sha256": "c7ad5b92f385050089d1cf38195f437eb626ae57f22cd9998a4b4f74a3c91392",
+  "size": 25702156,
+  "subdir": "win-64",
+  "timestamp": 1651766976172,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/libclang13-14.0.3-default_h77d9078_0.tar.bz2",
+  "version": "14.0.3"
+}

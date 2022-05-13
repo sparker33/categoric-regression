@@ -1,0 +1,14 @@
+# libvorbisenc pkg-config source file
+
+prefix=D:/Programs/categoric-regression/regressor_env/Library
+exec_prefix=D:/Programs/categoric-regression/regressor_env/Library/bin
+libdir=D:/Programs/categoric-regression/regressor_env/Library/lib
+includedir=D:/Programs/categoric-regression/regressor_env/Library/include
+
+Name: vorbisenc
+Description: vorbisenc is a library that provides a convenient API for setting up an encoding environment using libvorbis
+Version: 1.3.7
+Requires.private: vorbis
+Conflicts:
+Libs: -L${libdir} -lvorbisenc
+Cflags: -I${includedir}

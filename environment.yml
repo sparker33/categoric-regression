@@ -1,0 +1,7 @@
+name: regressor_env
+dependencies:
+ - pandas=1.4.2
+ - numpy=1.22.3
+ - scipy=1.8.0
+ - scikit-learn=1.1.0
+ - matplotlib=3.5.2

@@ -1,0 +1,40 @@
+{
+  "build": "py310h5588dad_0",
+  "build_number": 0,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "matplotlib-base >=3.5.2,<3.5.3.0a0",
+    "pyqt",
+    "python >=3.10,<3.11.0a0",
+    "python_abi 3.10.* *_cp310",
+    "tornado"
+  ],
+  "extracted_package_dir": "C:\\Users\\Seth\\miniconda3\\pkgs\\matplotlib-3.5.2-py310h5588dad_0",
+  "features": "",
+  "files": [
+    ".nonadmin"
+  ],
+  "fn": "matplotlib-3.5.2-py310h5588dad_0.tar.bz2",
+  "license": "LicenseRef-PSF-based",
+  "license_family": "PSF",
+  "link": {
+    "source": "C:\\Users\\Seth\\miniconda3\\pkgs\\matplotlib-3.5.2-py310h5588dad_0",
+    "type": 1
+  },
+  "md5": "c32e55a941c9ead904da79dfdaaa7621",
+  "name": "matplotlib",
+  "package_tarball_full_path": "C:\\Users\\Seth\\miniconda3\\pkgs\\matplotlib-3.5.2-py310h5588dad_0.tar.bz2",
+  "paths_data": {
+    "paths": [],
+    "paths_version": 1
+  },
+  "requested_spec": "matplotlib",
+  "sha256": "73841bc497181ae5f5c7c0d6e57e01758c5fb2a1991bd41b861854c2e6622bc6",
+  "size": 7009,
+  "subdir": "win-64",
+  "timestamp": 1651611311304,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/matplotlib-3.5.2-py310h5588dad_0.tar.bz2",
+  "version": "3.5.2"
+}

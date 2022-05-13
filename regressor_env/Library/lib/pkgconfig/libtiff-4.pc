@@ -1,0 +1,11 @@
+prefix=D:/Programs/categoric-regression/regressor_env/Library
+exec_prefix=D:/Programs/categoric-regression/regressor_env/Library
+libdir=D:/Programs/categoric-regression/regressor_env/Library/lib
+includedir=D:/Programs/categoric-regression/regressor_env/Library/include
+
+Name: libtiff
+Description:  Tag Image File Format (TIFF) library.
+Version: 
+Libs: -LD:/Programs/categoric-regression/regressor_env/Library/lib -ltiff
+Libs.private: 
+Cflags: -ID:/Programs/categoric-regression/regressor_env/Library/include
