@@ -1,9 +1,9 @@
 import numpy as np
 
 class agent_point:
-    def __init__(self, id, val:float, dims:list, mass:float = 1.0):
+    def __init__(self, id, vals:np.array, dims:list, mass:float = 1.0):
         self.id = id
-        self.val = val
+        self.vals = vals
         self.categories = dims
         dim_length = len(dims)+1
         self.force = np.zeros(dim_length)

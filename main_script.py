@@ -8,7 +8,7 @@ from category_mapper import category_mapper
 data = pd.read_csv("sample_data.tsv", sep='\t')
 
 cardinal_dims_indexes = [2,3]
-result_dim_index = 4
+result_dim_index = [4]
 base_regression = regressor(data, cardinal_dims_indexes, result_dim_index)
 # base_regression.print_regression_string()
 # base_regression.plot_regression()
@@ -18,8 +18,8 @@ result_norm = sum([abs(r) for r in data['Result']]) / len(data['Result'])
 data['Base Error'] = (data['Base Regression'] - data['Result']) / result_norm
 
 category_dims = ['Category 1', 'Category 2']
-vals_dim = 'Base Error'
-sim = arrange_sim(data, category_dims, vals_dim, values_force_const=0.012, categories_force_const=0.1, ambient_force_const=-0.2,
+vals_dims = ['Base Error']
+sim = arrange_sim(data, category_dims, vals_dims, values_force_const=0.012, categories_force_const=0.1, ambient_force_const=-0.2,
                     values_order_const=1.0, categories_order_const=0.0, ambient_order_const=0.0, damping_const=0.33, dist_thresh=10**(-8))
 
 ################
@@ -30,7 +30,7 @@ import matplotlib.animation as animation
 fig,axs = plt.subplots(2,2)
 ID1_colors = {'A':1, 'B':2, 'C':3, 'D':4, 'Z':5}
 ID2_colors = {'ID1':1, 'ID2':2, 'ID3':3, 'ID4':4, 'ID5':5}
-scat_vals = axs[0,0].scatter(x=[a.pos[0] for a in sim.agents], y=[a.pos[1] for a in sim.agents], c=[a.val for a in sim.agents], cmap='YlGnBu')
+scat_vals = axs[0,0].scatter(x=[a.pos[0] for a in sim.agents], y=[a.pos[1] for a in sim.agents], c=[sum(a.vals) for a in sim.agents], cmap='YlGnBu')
 scat_cat1 = axs[0,1].scatter(x=[a.pos[0] for a in sim.agents], y=[a.pos[1] for a in sim.agents], c=[ID1_colors[id] for id in list(data['Category 1'])], cmap='Spectral')
 scat_cat2 = axs[1,0].scatter(x=[a.pos[0] for a in sim.agents], y=[a.pos[1] for a in sim.agents], c=[ID2_colors[id] for id in list(data['Category 2'])], cmap='Spectral')
 times = [0.0]
@@ -55,6 +55,8 @@ plt.show()
 #### END PROTOTYPING PLOTS 1
 ################
 
+# sim.run_sim(duration=999999, increment=0.1, cutoff_mean_kinetic_energy=10.0**(-8))
+
 point_positions = sim.get_positions_df()
 arranged_points_norm = category_mapper.orient_points(point_positions)
 mapper = category_mapper.get_mapper(data, arranged_points_norm, category_dims)
@@ -62,6 +64,9 @@ mapper = category_mapper.get_mapper(data, arranged_points_norm, category_dims)
 ################
 #### PROTOTYPING PLOTS 2
 ################
+import matplotlib.pyplot as plt
+ID1_colors = {'A':1, 'B':2, 'C':3, 'D':4, 'Z':5}
+ID2_colors = {'ID1':1, 'ID2':2, 'ID3':3, 'ID4':4, 'ID5':5}
 fig, axs = plt.subplots(2,2)
 arranged_points = np.array(point_positions)
 axs[0,0].scatter(x=arranged_points[:,0], y=arranged_points[:,1], c=[val for val in list(data['Base Error'])], cmap='YlGnBu')
