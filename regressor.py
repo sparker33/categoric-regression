@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy import rand
 from sklearn.linear_model import LinearRegression
 
 class regressor:
