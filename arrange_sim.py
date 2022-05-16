@@ -3,7 +3,7 @@ import numpy as np
 from agent_point import agent_point
 
 class arrange_sim:
-    def __init__(self, data: pd.DataFrame, category_dims:list, values_dim,
+    def __init__(self, data: pd.DataFrame, category_dims:list, values_dims,
                 values_force_const:float, categories_force_const:float, ambient_force_const:float,
                 values_order_const:float = 1.0, categories_order_const:float = 0.0, ambient_order_const:float = 0.0, 
                 damping_const:float = 0.05, dist_thresh:float = 10**(-10)):
@@ -17,7 +17,7 @@ class arrange_sim:
         self.dist_thresh = dist_thresh # cutoff proximity for force calculations (prevents ~infinite forces)
         self.agents = []
         for row in data.iterrows():
-            self.agents.append(agent_point(row[0], row[1][values_dim], row[1][category_dims]))
+            self.agents.append(agent_point(row[0], row[1][values_dims], row[1][category_dims]))
         return
 
     def get_positions_df(self) -> pd.DataFrame:
@@ -35,13 +35,12 @@ class arrange_sim:
         energy[1] = energy[1] / len(self.agents)
         return energy
 
-    def run_sim(self, duration:float = 1.0, increment:float = 0.1, print_prog:bool = False) -> None:
+    def run_sim(self, duration:float = 1.0, increment:float = 0.1, cutoff_mean_kinetic_energy:float = 10.0**(-8)) -> None:
         assert duration > 0.0
         assert increment > 0.0
         t = 0.0
-        while t < duration:
-            if print_prog:
-                print(round(t/duration, 2))
+        kinetic_energy = [0.0, 0.0]
+        while t < duration and (kinetic_energy[-1] >= kinetic_energy[-2] or (kinetic_energy[-1] / len(self.agents)) > cutoff_mean_kinetic_energy):
             for a in self.agents:
                 a.clear_forces()
             for i,a1 in enumerate(self.agents[:-1]):
@@ -52,6 +51,7 @@ class arrange_sim:
                 a1.update_kinematics(increment, self.damping)
             self.agents[-1].update_kinematics(increment, self.damping)
             t += increment
+            kinetic_energy.append(self.get_energy()[1])
         return
 
     def calculate_forces(self, agent1:agent_point, agent2:agent_point) -> np.array:
@@ -60,7 +60,7 @@ class arrange_sim:
         distance = np.linalg.norm(direction)
         force_magnitude = 0.0
         if distance > self.dist_thresh:
-            force_magnitude += ((self.c_vals * abs(agent1.val - agent2.val) / (distance**self.o_vals)) + (self.c_ambient / (distance**self.o_ambient)))
+            force_magnitude += ((self.c_vals * abs(np.linalg.norm(agent1.vals - agent2.vals)) / (distance**self.o_vals)) + (self.c_ambient / (distance**self.o_ambient)))
         category_force = (self.c_categories / (distance**self.o_categories))
         for i,cat in enumerate(agent1.categories):
             if agent2.categories[i] != cat:
