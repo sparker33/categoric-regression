@@ -4,11 +4,11 @@ from agent_point import agent_point
 
 class arrange_sim:
     def __init__(self, data: pd.DataFrame, category_dims:list, values_dim,
-                values_force_const:float, categoriees_force_const:float, ambient_force_const:float,
+                values_force_const:float, categories_force_const:float, ambient_force_const:float,
                 values_order_const:float = 1.0, categories_order_const:float = 0.0, ambient_order_const:float = 0.0, 
                 damping_const:float = 0.05, dist_thresh:float = 10**(-10)):
         self.c_vals = values_force_const # positive values repel dissimilar, proportional to difference in values
-        self.c_categories = categoriees_force_const # positive values repel dissimilar categories, const
+        self.c_categories = categories_force_const # positive values repel dissimilar categories, const
         self.c_ambient = ambient_force_const # positive values repel, const
         self.o_vals = values_order_const # sets order of distance exponential in force calc denominator for values
         self.o_categories = categories_order_const # sets order of distance exponential in force calc denominator for categories

@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import scipy
 
 from regressor import regressor
 from arrange_sim import arrange_sim
@@ -11,7 +10,7 @@ data = pd.read_csv("sample_data.tsv", sep='\t')
 cardinal_dims_indexes = [2,3]
 result_dim_index = 4
 base_regression = regressor(data, cardinal_dims_indexes, result_dim_index)
-base_regression.print_regression_string()
+# base_regression.print_regression_string()
 # base_regression.plot_regression()
 
 data['Base Regression'] = base_regression.get_Y_pred_Series()
@@ -20,7 +19,7 @@ data['Base Error'] = (data['Base Regression'] - data['Result']) / result_norm
 
 category_dims = ['Category 1', 'Category 2']
 vals_dim = 'Base Error'
-sim = arrange_sim(data, category_dims, vals_dim, values_force_const=0.012, categoriees_force_const=0.1, ambient_force_const=-0.2,
+sim = arrange_sim(data, category_dims, vals_dim, values_force_const=0.012, categories_force_const=0.1, ambient_force_const=-0.2,
                     values_order_const=1.0, categories_order_const=0.0, ambient_order_const=0.0, damping_const=0.33, dist_thresh=10**(-8))
 
 ################
@@ -44,8 +43,8 @@ def update(frame, lines):
     scat_cat2.set_offsets([[a.pos[0],a.pos[1]] for a in sim.agents])
     energy = sim.get_energy()
     times.append(times[-1]+0.1)
-    axs[1,1].set_xlim(0,times[-1])
-    axs[1,1].set_ylim(0,np.max([np.max(sim_energy[0]), np.max(sim_energy[1])]))
+    axs[1,1].set_xlim(0.0,times[-1])
+    axs[1,1].set_ylim(0.0,np.max([np.max(sim_energy[0]), np.max(sim_energy[1]), 0.1]))
     for i,line in enumerate(lines):
         sim_energy[i].append(energy[i])
         line.set_data(np.array([list(te) for te in zip(times, sim_energy[i])]).T)
@@ -82,7 +81,6 @@ Y = data.iloc[:, result_dim_index].values.reshape(-1, 1)  # -1 means that calcul
 final_linear_regressor = LinearRegression()  # create object for the class
 final_linear_regressor.fit(X, Y)  # perform linear regression
 final_Y_pred = final_linear_regressor.predict(X)  # make predictions
-
 data['Final Regression'] = pd.Series([p[0] for p in final_Y_pred])
 data['Final Error'] = (data['Final Regression'] - data['Result']) / result_norm
 print("BaseErr: {}; FinalErr: {}".format(np.linalg.norm(data['Base Error']), np.linalg.norm(data['Final Error'])))
