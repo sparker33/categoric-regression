@@ -5,7 +5,7 @@ class agent_point:
         self.id = id
         self.val = val
         self.categories = dims
-        dim_length = len(dims)
+        dim_length = len(dims)+1
         self.force = np.zeros(dim_length)
         self.accel = np.zeros(dim_length)
         self.vel = np.zeros(dim_length)

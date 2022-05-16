@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
-from scipy import rand
+import scipy
+
 from regressor import regressor
 from arrange_sim import arrange_sim
+from category_mapper import category_mapper
 
 data = pd.read_csv("sample_data.tsv", sep='\t')
 
@@ -54,21 +56,15 @@ plt.show()
 #### END PROTOTYPING PLOTS 1
 ################
 
-################
-#### PROTOTYPING ORIENTING
-################
-arranged_points = np.array(sim.get_positions_df())
-w,v = np.linalg.eig(np.cov(arranged_points.T))
-v_ordered = v[np.argsort(w)]
-arranged_points_norm = (v_ordered @ arranged_points.T).T
-################
-#### END PROTOTYPING ORIENTING
-################
+point_positions = sim.get_positions_df()
+arranged_points_norm = category_mapper.orient_points(point_positions)
+mappers = category_mapper.get_mappers(data, arranged_points_norm, category_dims)
 
 ################
 #### PROTOTYPING PLOTS 2
 ################
 fig, axs = plt.subplots(2,2)
+arranged_points = np.array(point_positions)
 axs[0,0].scatter(x=arranged_points[:,0], y=arranged_points[:,1], c=[val for val in list(data['Base Error'])], cmap='YlGnBu')
 axs[0,1].scatter(x=arranged_points_norm[:,0], y=arranged_points_norm[:,1], c=[val for val in list(data['Base Error'])], cmap='YlGnBu')
 axs[1,0].scatter(x=arranged_points_norm[:,0], y=arranged_points_norm[:,1], c=[ID1_colors[id] for id in list(data['Category 1'])], cmap='Spectral')
@@ -77,3 +73,4 @@ plt.show()
 ################
 #### END PROTOTYPING PLOTS 2
 ################
+
