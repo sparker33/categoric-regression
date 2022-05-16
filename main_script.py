@@ -58,7 +58,7 @@ plt.show()
 
 point_positions = sim.get_positions_df()
 arranged_points_norm = category_mapper.orient_points(point_positions)
-mappers = category_mapper.get_mappers(data, arranged_points_norm, category_dims)
+mapper = category_mapper.get_mapper(data, arranged_points_norm, category_dims)
 
 ################
 #### PROTOTYPING PLOTS 2
@@ -74,3 +74,22 @@ plt.show()
 #### END PROTOTYPING PLOTS 2
 ################
 
+from sklearn.linear_model import LinearRegression
+data['Category 1 Cardinal'] = data.apply(lambda row: mapper['Category 1'][row['Category 1']], axis=1)
+data['Category 2 Cardinal'] = data.apply(lambda row: mapper['Category 2'][row['Category 2']], axis=1)
+X = data.iloc[:, [2,3,7,8]].values.reshape(-1, 4)  # values converts it into a numpy array
+Y = data.iloc[:, result_dim_index].values.reshape(-1, 1)  # -1 means that calculate the dimension of rows, but have 1 column
+final_linear_regressor = LinearRegression()  # create object for the class
+final_linear_regressor.fit(X, Y)  # perform linear regression
+final_Y_pred = final_linear_regressor.predict(X)  # make predictions
+
+data['Final Regression'] = pd.Series([p[0] for p in final_Y_pred])
+data['Final Error'] = (data['Final Regression'] - data['Result']) / result_norm
+print("BaseErr: {}; FinalErr: {}".format(np.linalg.norm(data['Base Error']), np.linalg.norm(data['Final Error'])))
+# fig = plt.figure()
+# ax = plt.axes(projection='3d')
+# ax.scatter3D(X[:,2], X[:,3], Y, c=final_Y_pred, cmap='Greens')
+# ax.set_xlabel('Category 1')
+# ax.set_ylabel('Category 2')
+# ax.set_zlabel('Result')
+# plt.show()

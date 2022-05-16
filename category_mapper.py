@@ -14,7 +14,7 @@ class category_mapper:
         positions_norm = positions_norm + (0.5*np.ones(positions_norm.shape) - positions_center)
         return positions_norm
 
-    def get_mappers(data:pd.DataFrame, positions_norm:np.array, category_dims:list) -> dict:
+    def get_mapper(data:pd.DataFrame, positions_norm:np.array, category_dims:list) -> dict:
         positions_df = pd.DataFrame(positions_norm)
         positions_dims = list(positions_df.columns)
         merged_data = pd.merge(data, positions_df, left_index=True, right_index=True)
