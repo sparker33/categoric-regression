@@ -35,7 +35,7 @@ class arrange_sim:
         energy[1] = energy[1] / len(self.agents)
         return energy
 
-    def run_sim(self, duration:float = 1.0, increment:float = 0.1, cutoff_mean_kinetic_energy:float = 10.0**(-8)) -> None:
+    def run_sim(self, duration:float = 1.0, increment:float = 0.1, cutoff_mean_kinetic_energy:float = 10.0**(-8), print_prog:bool = False) -> None:
         assert duration > 0.0
         assert increment > 0.0
         t = 0.0
@@ -52,6 +52,8 @@ class arrange_sim:
             self.agents[-1].update_kinematics(increment, self.damping)
             t += increment
             kinetic_energy.append(self.get_energy()[1])
+            if print_prog:
+                print("Time: {}; Energy: {}".format(t/duration, (kinetic_energy[-1] / len(self.agents)) - cutoff_mean_kinetic_energy))
         return
 
     def calculate_forces(self, agent1:agent_point, agent2:agent_point) -> np.array:
