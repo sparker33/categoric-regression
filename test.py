@@ -8,7 +8,8 @@ from category_mapper import category_mapper
 
 data = pd.read_csv("raw_polls.csv")
 significant_polls = data.groupby('pollster_rating_id', as_index=False)['poll_id'].count().rename(columns={'poll_id':'polls_count'})
-significant_polls = significant_polls[significant_polls['polls_count']>500]
+significant_polls = significant_polls[significant_polls['polls_count']>15]
+significant_polls = significant_polls[significant_polls['polls_count']<20]
 print(significant_polls)
 data = pd.merge(data, significant_polls, how='inner', on='pollster_rating_id')
 data['poll_date_relative'] = data.apply(lambda row: int((datetime.datetime.strptime(row['electiondate'], "%m/%d/%Y") - datetime.datetime.strptime(row['polldate'], "%m/%d/%Y")).days), axis=1)
